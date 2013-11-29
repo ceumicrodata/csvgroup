@@ -9,8 +9,9 @@ from csvgroup.common import dump_as_csv
 
 def to_target_expression_pair(rule):
     match = re.match(
-                r"(?P<target>[^=]+?)\s*=\s*(?P<expression>.+)",
-                rule)
+        r"(?P<target>[^=]+?)\s*=\s*(?P<expression>.+)",
+        rule
+    )
 
     if match is None:
         raise ValueError("Invalid rule: {}".format(rule))
@@ -52,17 +53,20 @@ def process(items, rules, imported_module):
 
 def arguments():
     parser = argparse.ArgumentParser(
-                description="By-row mapping of fields in CSV files")
+        description="By-row mapping of fields in CSV files"
+    )
     parser.add_argument(
         "--import-module",
         "-i",
-        help="module to import for the operation")
+        help="module to import for the operation"
+    )
     parser.add_argument(
         "rules",
         metavar="rule",
         nargs="+",
-        help=("rule to perform on fields "
-              + "(e.g., 'left_majority = int(left) > int(right)')"))
+        help="rule to perform on fields (e.g., 'left_majority\
+= int(left) > int(right)')"
+    )
 
     return parser.parse_args()
 
@@ -80,7 +84,9 @@ def main():
         process(
             csv.DictReader(sys.stdin),
             rules,
-            imported_module))
+            imported_module
+        )
+    )
 
 
 if __name__ == "__main__":

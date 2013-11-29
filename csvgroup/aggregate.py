@@ -26,27 +26,35 @@ def process(items, group, columns, function, type):
         return [item.get(column) for column in group]
 
     def groups(items, key):
-        return ((group_key, list(generator))
-                for group_key, generator in itertools.groupby(
-                                                sorted(items, key=key),
-                                                key))
+        return (
+            (group_key, list(generator))
+            for group_key, generator in itertools.groupby(
+                sorted(items, key=key),
+                key
+            )
+        )
 
     fieldnames = group + columns
 
     yield fieldnames
 
     for group_key, group_items in groups(items, key):
-        yield (group_key
-               + [aggregate(
+        yield (
+            group_key + [
+                aggregate(
                     function,
                     get_values(column, group_items),
-                    type)
-                  for column in columns])
+                    type
+                )
+                for column in columns
+            ]
+        )
 
 
 def arguments():
     parser = argparse.ArgumentParser(
-                description="Perform group-by aggregation on CSV files")
+        description="Perform group-by aggregation on CSV files"
+    )
     parser.add_argument(
         "--group",
         "-g",
@@ -91,7 +99,9 @@ def main():
             group,
             columns,
             function,
-            type))
+            type
+        )
+    )
 
 
 if __name__ == "__main__":
