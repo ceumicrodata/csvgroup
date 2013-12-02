@@ -64,8 +64,10 @@ def arguments():
         "rules",
         metavar="rule",
         nargs="+",
-        help="rule to perform on fields (e.g., 'left_majority\
-= int(left) > int(right)')"
+        help=(
+            "rule to perform on fields "
+            + "(e.g., 'left_majority = int(left) > int(right)')"
+        )
     )
 
     return parser.parse_args()
